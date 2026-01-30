@@ -1,0 +1,159 @@
+import { Canvas, useFrame } from "@react-three/fiber";
+import HomeText from "../components/HomeText";
+import ParallaxBackground from "../components/ParallaxBackground";
+import { Rocket } from "../components/Rocket";
+import { Float, OrbitControls } from "@react-three/drei";
+import { useMediaQuery } from "react-responsive";
+import { easing } from "maath";
+import { Suspense, useEffect, useRef, useState } from "react";
+import Loader from "../components/Loader";
+import {
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useSpring,
+  useTransform,
+} from "motion/react";
+
+const Home = () => {
+  const isMobile = useMediaQuery({ maxWidth: 853 });
+
+  const sectionRef = useRef(null);
+  const touchStartY = useRef(0);
+  const [stepIndex, setStepIndex] = useState(0);
+  const [progressPct, setProgressPct] = useState(0);
+  const targetProgress = useMotionValue(0);
+  const smoothProgress = useSpring(targetProgress, {
+    stiffness: 90,
+    damping: 22,
+    mass: 0.8,
+  });
+
+  const progressWidth = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+  const steps = [
+    "Introduction",
+    "Concept & Strategy",
+    "Build & Iterate",
+    "Launch & Scale",
+  ];
+
+  useMotionValueEvent(smoothProgress, "change", (latest) => {
+    const nextIndex = Math.min(
+      steps.length - 1,
+      Math.floor(latest * steps.length)
+    );
+    setStepIndex(nextIndex);
+    setProgressPct(Math.round(latest * 100));
+  });
+
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const clamp = (value) => Math.min(1, Math.max(0, value));
+
+    const handleWheel = (event) => {
+      event.preventDefault();
+      const clampedDelta = Math.max(-60, Math.min(60, event.deltaY));
+      const next = clamp(targetProgress.get() + clampedDelta * 0.0006);
+      targetProgress.set(next);
+    };
+
+    const handleTouchStart = (event) => {
+      touchStartY.current = event.touches?.[0]?.clientY ?? 0;
+    };
+
+    const handleTouchMove = (event) => {
+      event.preventDefault();
+      const currentY = event.touches?.[0]?.clientY ?? 0;
+      const delta = touchStartY.current - currentY;
+      const next = clamp(targetProgress.get() + delta * 0.002);
+      targetProgress.set(next);
+      touchStartY.current = currentY;
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [targetProgress]);
+
+  const rocketScale = isMobile ? 0.002 : 0.005;
+
+  // Define point A and point B (tune these!)
+  const from = isMobile ? [0, -1.0, 0] : [-2.5, -1.5, 0.5]; // starting point
+  const to = isMobile ? [0.8, 1.6, -2.2] : [4.2, 2.8, -3.0]; // ending point (top-right)
+
+  return (
+    <section
+      ref={sectionRef}
+      className="fixed inset-0 flex items-start justify-center min-h-screen overflow-hidden md:items-start md:justify-start c-space select-none"
+    >
+      <HomeText />
+      <ParallaxBackground scrollProgress={smoothProgress} />
+      <div className="absolute bottom-10 left-6 z-20 flex flex-col gap-3 md:bottom-14 md:left-10">
+        <div className="relative w-56 overflow-hidden rounded-full bg-white/10 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur">
+          <motion.div
+            className="pointer-events-none absolute inset-0 rounded-full bg-white/20"
+            style={{ width: progressWidth }}
+          />
+          <span className="relative z-10 font-semibold">
+          Scroll to launch 🚀
+          </span>
+        </div>
+        <div className="relative h-1 w-56 rounded-full bg-white/20">
+          <motion.div
+            className="absolute left-0 top-0 h-full rounded-full bg-white"
+            style={{ width: progressWidth }}
+          />
+        </div>
+      </div>
+      <div className="absolute bottom-10 right-6 z-20 w-64 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-neutral-200 backdrop-blur md:bottom-14 md:right-10">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
+          Step {stepIndex + 1} / {steps.length}
+        </div>
+        <div className="mt-1 text-lg font-semibold text-white">
+          {steps[stepIndex]}
+        </div>
+        <div className="text-xs text-white/70">
+          Progress {progressPct}%
+        </div>
+      </div>
+      {progressPct >= 100 && (
+        <img
+          src="/mongolia-logo.png"
+          alt="Mongolia flag"
+          className="absolute right-16 top-20 z-30 h-25 w-auto drop-shadow-[0_10px_30px_rgba(255,255,255,0.15)] md:right-28 md:top-24 md:h-30"
+        />
+      )}
+      <figure
+        className="absolute inset-0"
+        style={{ width: "100vw", height: "100vh" }}
+      >
+        <Canvas>
+           <Suspense fallback={<Loader />}>
+            <ambientLight intensity={0.6} />
+            <directionalLight position={[3, 4, 2]} intensity={1.2} />
+            <Rocket
+              scale={rocketScale} // scale the rocket appropriately
+              scrollProgress={smoothProgress} // pass scroll progress
+              from={from} // starting position
+              to={to} // ending position
+              rotFrom={-0.2} // face right on load
+              rotTo={Math.PI / 2} // keep facing right
+            />
+            {/* <OrbitControls enableZoom={false} /> */}
+          </Suspense>
+        </Canvas>
+      </figure>
+    </section>
+  );
+};
+
+export default Home;
