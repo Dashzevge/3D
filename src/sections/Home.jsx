@@ -6,6 +6,7 @@ import { Float, OrbitControls } from "@react-three/drei";
 import { useMediaQuery } from "react-responsive";
 import { easing } from "maath";
 import { Suspense, useEffect, useRef, useState } from "react";
+import { SiReact, SiVite, SiTailwindcss, SiNodedotjs, SiFramer, SiThreedotjs } from "react-icons/si";
 import Loader from "../components/Loader";
 import profileImage from "../assets/Profile.png";
 import {
@@ -34,7 +35,7 @@ const Home = () => {
   const steps = [
     "About Me",
     "Build With",
-    "Build & Iterate",
+    "Social`s",
     "Launch & Scale",
   ];
   const stepDescriptions = [
@@ -49,7 +50,16 @@ const Home = () => {
                     </p>
                   </div>
       </div>,
-    null,
+       <div className="inline-flex items-center justify-center gap-3 px-4 py-2">
+                <div className="flex items-center justify-center gap-8 text-3xl">
+                  <SiReact className="text-cyan-300" title="React" aria-label="React" />
+                  <SiVite className="text-purple-300" title="Vite" aria-label="Vite" />
+                  <SiTailwindcss className="text-sky-300" title="Tailwind CSS" aria-label="Tailwind CSS" />
+                  <SiFramer className="text-yellow-300" title="Framer Motion" aria-label="Framer Motion" />
+                  <SiNodedotjs className="text-green-300" title="Node.js" aria-label="Node.js" />
+                  <SiThreedotjs className="text-red-400" title="Three.js" aria-label="Three.js" />
+                </div>
+              </div>,
     null,
     null,
   ];
