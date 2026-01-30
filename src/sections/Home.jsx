@@ -7,6 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import { easing } from "maath";
 import { Suspense, useEffect, useRef, useState } from "react";
 import Loader from "../components/Loader";
+import profileImage from "../assets/Profile.png";
 import {
   motion,
   useMotionValue,
@@ -31,10 +32,26 @@ const Home = () => {
 
   const progressWidth = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
   const steps = [
-    "Introduction",
-    "Concept & Strategy",
+    "About Me",
+    "Build With",
     "Build & Iterate",
     "Launch & Scale",
+  ];
+  const stepDescriptions = [
+     <div className="flex flex-col items-center sm:flex-row">
+                  <img className="w-32 rounded-full" src={profileImage} alt="Dash Bumchin"/>
+                  <div className="mt-2 flex flex-col sm:ml-6 sm:mt-0">
+                    <h4 className="text-lg">Dashzevge Bumchin</h4>
+                    <p className="mt-2 block text-sm font-thin">
+                      I&apos;m a <strong>full stack developer</strong> from <strong>Mongolia</strong> 🇲🇳 with{" "}
+                      <strong>8+ years</strong> of expertise in designing and developing{" "}
+                      <strong>web and enterprise applications</strong>.
+                    </p>
+                  </div>
+      </div>,
+    null,
+    null,
+    null,
   ];
 
   useMotionValueEvent(smoothProgress, "change", (latest) => {
@@ -92,42 +109,56 @@ const Home = () => {
 
   return (
     <section
+      id="home"
       ref={sectionRef}
       className="fixed inset-0 flex items-start justify-center min-h-screen overflow-hidden md:items-start md:justify-start c-space select-none"
     >
       <HomeText />
       <ParallaxBackground scrollProgress={smoothProgress} />
-      <div className="absolute bottom-10 left-6 z-20 flex flex-col gap-3 md:bottom-14 md:left-10">
-        <div className="relative w-56 overflow-hidden rounded-full bg-white/10 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur">
+      <div className="absolute bottom-10 left-6 z-20 flex w-72 flex-col gap-3 md:bottom-14 md:left-10 md:w-75">
+        <div className="relative w-full overflow-hidden rounded-full bg-white/10 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur">
           <motion.div
             className="pointer-events-none absolute inset-0 rounded-full bg-white/20"
             style={{ width: progressWidth }}
           />
-          <span className="relative z-10 font-semibold">
-            Scroll to launch{" "}
-            <span className="relative inline-flex h-5 w-5 items-center justify-center">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative z-10">🚀</span>
+          <span className="relative z-10 flex items-center justify-between gap-3 font-semibold">
+            <span className="inline-flex items-center gap-2">
+              <span className="relative inline-flex h-5 w-5 items-center justify-center">
+                <span
+                  className={`absolute inline-flex h-full w-full rounded-full ${
+                    progressPct >= 100
+                      ? "animate-ping bg-yellow-400 opacity-75"
+                      : "animate-ping bg-green-400 opacity-75"
+                  }`}
+                ></span>
+                <span className="relative z-10">
+                  {progressPct >= 100 ? "🏁" : "🚀"}
+                </span>
+              </span>
+              <span className="whitespace-nowrap">
+                {progressPct >= 100 ? "Arrived Destination" : "Scroll to launch"}
+              </span>
+            </span>
+            <span className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-semibold tracking-[0.2em] text-white">
+              {progressPct}%
             </span>
           </span>
         </div>
-        <div className="relative h-1 w-56 rounded-full bg-white/20">
+        <div className="relative h-1 w-full rounded-full bg-white/20">
           <motion.div
             className="absolute left-0 top-0 h-full rounded-full bg-white"
             style={{ width: progressWidth }}
           />
         </div>
       </div>
-      <div className="absolute bottom-10 right-6 z-20 w-64 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-neutral-200 backdrop-blur md:bottom-14 md:right-10">
+      <div className="absolute bottom-10 right-6 z-20 w-64 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-neutral-200 backdrop-blur md:bottom-14 md:right-10 md:w-100">
         <div className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
           Step {stepIndex + 1} / {steps.length}
         </div>
         <div className="mt-1 text-lg font-semibold text-white">
           {steps[stepIndex]}
         </div>
-        <div className="text-xs text-white/70">
-          Progress {progressPct}%
-        </div>
+        {stepDescriptions[stepIndex]}
       </div>
       {progressPct >= 100 && (
         <img
