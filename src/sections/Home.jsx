@@ -104,7 +104,11 @@ const Home = () => {
             style={{ width: progressWidth }}
           />
           <span className="relative z-10 font-semibold">
-          Scroll to launch 🚀
+            Scroll to launch{" "}
+            <span className="relative inline-flex h-5 w-5 items-center justify-center">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative z-10">🚀</span>
+            </span>
           </span>
         </div>
         <div className="relative h-1 w-56 rounded-full bg-white/20">
