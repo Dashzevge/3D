@@ -7,8 +7,10 @@ import { useMediaQuery } from "react-responsive";
 import { easing } from "maath";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { SiReact, SiVite, SiTailwindcss, SiNodedotjs, SiFramer, SiThreedotjs } from "react-icons/si";
+import { FaGithub, FaInstagram, FaLinkedin, FaRegCopy } from "react-icons/fa";
 import Loader from "../components/Loader";
 import profileImage from "../assets/Profile.png";
+import SocialIcon from "../components/SocialIcon";
 import {
   motion,
   useMotionValue,
@@ -22,8 +24,10 @@ const Home = () => {
 
   const sectionRef = useRef(null);
   const touchStartY = useRef(0);
+  const copyTimeoutRef = useRef(null);
   const [stepIndex, setStepIndex] = useState(0);
   const [progressPct, setProgressPct] = useState(0);
+  const [isCopied, setIsCopied] = useState(false);
   const targetProgress = useMotionValue(0);
   const smoothProgress = useSpring(targetProgress, {
     stiffness: 90,
@@ -35,9 +39,19 @@ const Home = () => {
   const steps = [
     "About Me",
     "Build With",
-    "Social`s",
-    "Launch & Scale",
+    "Social Links",
+    "Contact Me",
   ];
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("dash.bumchin@gmail.com");
+    setIsCopied(true);
+    if (copyTimeoutRef.current) {
+      clearTimeout(copyTimeoutRef.current);
+    }
+    copyTimeoutRef.current = setTimeout(() => {
+      setIsCopied(false);
+    }, 1400);
+  };
   const stepDescriptions = [
      <div className="flex flex-col items-center sm:flex-row">
                   <img className="w-32 rounded-full" src={profileImage} alt="Dash Bumchin"/>
@@ -50,8 +64,8 @@ const Home = () => {
                     </p>
                   </div>
       </div>,
-       <div className="inline-flex items-center justify-center gap-3 px-4 py-2">
-                <div className="flex items-center justify-center gap-8 text-3xl">
+      <div className="inline-flex items-center justify-center gap-3 px-4 py-2">
+                  <div className="flex items-center justify-center gap-8 text-3xl">
                   <SiReact className="text-cyan-300" title="React" aria-label="React" />
                   <SiVite className="text-purple-300" title="Vite" aria-label="Vite" />
                   <SiTailwindcss className="text-sky-300" title="Tailwind CSS" aria-label="Tailwind CSS" />
@@ -59,9 +73,69 @@ const Home = () => {
                   <SiNodedotjs className="text-green-300" title="Node.js" aria-label="Node.js" />
                   <SiThreedotjs className="text-red-400" title="Three.js" aria-label="Three.js" />
                 </div>
-              </div>,
-    null,
-    null,
+      </div>,
+      <div className="inline-flex items-center justify-center gap-3 px-4 py-2">
+                  <div className="flex items-center justify-center gap-20 pl-10 text-3xl">
+                    <SocialIcon
+                      href="https://github.com/Dashzevge"
+                      Icon={FaGithub}
+                      label="GitHub"
+                      className="text-blue-500 hover:text-blue-700"
+                    />
+                    <SocialIcon
+                      href="https://www.instagram.com/dashzevgebumchin/"
+                      Icon={FaInstagram}
+                      label="Instagram"
+                      className="text-pink-500 hover:text-pink-700"
+                    />
+                    <SocialIcon
+                      href="https://www.linkedin.com/in/dash-bumchin"
+                      Icon={FaLinkedin}
+                      label="LinkedIn"
+                      className="text-[#0A66C2] hover:text-blue-900"
+                    />
+                  </div>
+        </div>,
+    <div className="mt-2 flex flex-col gap-1 text-sm text-neutral-200">
+      <div className="flex items-center justify-between gap-2">
+        <span className="inline-flex flex-wrap items-center gap-2">
+          <span className="text-white/70">Email:</span>{" "}
+          <a
+            href="mailto:dash.bumchin@gmail.com"
+            target="_self"
+            rel="noreferrer"
+            className="text-white hover:text-white/80 underline-offset-2 hover:underline"
+          >
+            dash.bumchin@gmail.com
+          </a>
+        </span>
+        <span className="relative inline-flex items-center">
+          {isCopied && (
+            <span className="pointer-events-none absolute -top-6 right-0 rounded-md bg-white/90 px-2 py-0.5 text-[10px] font-semibold text-black shadow">
+              Copied!
+            </span>
+          )}
+          <button
+            type="button"
+            onClick={handleCopyEmail}
+            className="rounded-md border border-white/20 bg-white/10 p-1 text-white/90 transition hover:bg-white/20"
+            aria-label="Copy email"
+            title="Copy email"
+          >
+            <FaRegCopy className="text-sm" />
+          </button>
+        </span>
+      </div>
+      <div>
+        <span className="text-white/70">Cell Phone:</span>{" "}
+        <a
+          href="tel:+12524585472"
+          className="text-white hover:text-white/80 underline-offset-2 hover:underline"
+        >
+          +1 (252) 458-5472
+        </a>
+      </div>
+    </div>,
   ];
 
   useMotionValueEvent(smoothProgress, "change", (latest) => {
