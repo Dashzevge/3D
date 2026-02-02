@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { FiDownload, FiMenu, FiX } from "react-icons/fi";
+import { Frameworks } from "../components/Frameworks";
 const SatelliteLogo = "/satellite.svg";
 import skillsBackground from "../assets/projects/skills_background.jpg";
 import achievementsBackground from "../assets/projects/achievements.jpg";
@@ -66,6 +67,7 @@ const Navbar = () => {
 
   const navBackground = navBackgroundMap[location.pathname];
   const navTitle = navTitleMap[location.pathname];
+  const showFrameworks = location.pathname === "/skills";
 
   return (
     <nav
@@ -168,6 +170,14 @@ const Navbar = () => {
           </div>
         </div>
 
+        {showFrameworks && (
+          <div className="absolute top-6 right-1 z-40 hidden lg:block pointer-events-none">
+            <div className="h-[160px] w-[240px] opacity-70">
+              <Frameworks />
+            </div>
+          </div>
+        )}
+
         {/* Mobile Menu */}
         <AnimatePresence>
           {isOpen && (
@@ -251,7 +261,7 @@ const Navbar = () => {
         {navBackground && navTitle && (
           <div className="relative z-10 h-[200px] sm:h-[300px]">
             <div className="h-full flex max-w-5xl px-5 sm:px-0 pb-4 mx-auto items-end">
-              <h1 className="font-['Futura'] font-bold text-[4em] sm:text-[8em] leading-[0.8em] sm:leading-none text-left lowercase break-words w-full text-white">
+              <h1 className="font-black text-[2.6em] xs:text-[3.2em] sm:text-[8em] leading-[0.95em] sm:leading-none text-left lowercase break-words w-full text-white">
                 {navTitle}
               </h1>
             </div>

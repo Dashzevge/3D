@@ -6,7 +6,7 @@ const Achievements = () => {
       <div className="mx-auto max-w-5xl px-6">
         <div className="my-16 text-center">
           <p className="mt-3 text-sm text-neutral-400">
-            A progression from junior developer to senior full stack leadership.
+            A career progression from junior developer to senior full-stack engineer, marked by growing technical ownership, system design responsibility, and team leadership.
           </p>
         </div>
         <div className="relative">

@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import { motion } from "motion/react";
 import Skill from "../components/Skill";
 import { GROUP_NAMES, SKILLS } from "../constants";
-import { Frameworks } from "../components/Frameworks";
 
 const Skills = () => {
   const [search, setSearch] = useState("");
@@ -20,6 +19,7 @@ const Skills = () => {
 
   const filteredSkills = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();
+    console.log("Filtering skills with search:", normalizedSearch, "and group:", group);
     return SKILLS.filter((skill) => {
       const matchesSearch = skill.label.toLowerCase().includes(normalizedSearch);
       const matchesGroup = group === "All" || skill.group === group;
@@ -32,7 +32,7 @@ const Skills = () => {
   return (
     <div className="border-b border-neutral-800 pb-24 px-4 max-w-5xl mx-auto">
       <p className="mt-3 text-center text-sm text-neutral-400">
-        Here are specific tools, languages, and platforms I used over past years.
+        Below are the key technologies I’ve applied in designing, building, and operating scalable, production-grade applications throughout my career.
       </p>
 
       <div className="mt-10 mb-6 flex flex-col md:flex-row md:items-center gap-4">
@@ -41,7 +41,6 @@ const Skills = () => {
             Search skills
           </label>
           <input
-            id="skills-search"
             type="text"
             placeholder="Search by name..."
             value={search}
@@ -49,11 +48,7 @@ const Skills = () => {
             className="w-full rounded-lg border border-neutral-700 bg-neutral-950/80 p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
         </div>
-        <div className="w-full md:w-auto overflow-x-auto">
-          <div className="absolute inset-y-0 md:inset-y-9 w-full h-full start-[50%] md:scale-125">
-            <Frameworks />
-          </div>
-    
+        <div className="relative w-full md:w-auto overflow-x-auto">
           <div className="inline-flex gap-2 whitespace-nowrap pr-2">
             {GROUP_NAMES.map((g) => (
               <button
@@ -76,6 +71,7 @@ const Skills = () => {
       </div>
       {filteredSkills.length > 0 ? (
         <motion.div
+          key={`${group}-${search}`}
           initial="hidden"
           animate="visible"
           variants={{
