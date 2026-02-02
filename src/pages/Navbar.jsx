@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { FiDownload, FiMenu, FiX } from "react-icons/fi";
 const SatelliteLogo = "/satellite.svg";
-import skillsBackground from "../assets/projects/project-1.jpg";
+import skillsBackground from "../assets/projects/skills_background.jpg";
 import achievementsBackground from "../assets/projects/achievements.jpg";
 import projectsBackground from "../assets/projects/project-3.jpg";
 

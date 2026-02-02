@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { motion } from "motion/react";
 import Skill from "../components/Skill";
 import { GROUP_NAMES, SKILLS } from "../constants";
+import { Frameworks } from "../components/Frameworks";
 
 const Skills = () => {
   const [search, setSearch] = useState("");
@@ -49,6 +50,10 @@ const Skills = () => {
           />
         </div>
         <div className="w-full md:w-auto overflow-x-auto">
+          <div className="absolute inset-y-0 md:inset-y-9 w-full h-full start-[50%] md:scale-125">
+            <Frameworks />
+          </div>
+    
           <div className="inline-flex gap-2 whitespace-nowrap pr-2">
             {GROUP_NAMES.map((g) => (
               <button

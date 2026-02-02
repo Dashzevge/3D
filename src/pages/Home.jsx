@@ -59,7 +59,7 @@ const Home = () => {
                     <h4 className="text-lg">Dashzevge Bumchin</h4>
                     <p className="mt-2 block text-sm font-thin">
                       I&apos;m a <strong>full stack developer</strong> from <strong>Mongolia</strong> 🇲🇳 with{" "}
-                      <strong>8+ years</strong> of expertise in designing and developing{" "}
+                      <strong>9+ years</strong> of expertise in designing and developing{" "}
                       <strong>web and enterprise applications</strong>.
                     </p>
                   </div>
