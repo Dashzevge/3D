@@ -26,11 +26,11 @@ const AchievementItem = ({ achievement, isLeft }) => {
           isLeft ? "md:col-start-1 md:pr-12" : "md:col-start-3 md:pl-12",
         ].join(" ")}
       >
-        <div className="relative mt-4 pl-6">
+        <div className="relative pl-6">
           <span className="absolute bottom-0 left-0 top-0 w-px bg-neutral-100/80"></span>
 
-          <div className="mt-4 flex items-start justify-between gap-4">
-            <h3 className="text-lg font-bold font-['Futura'] text-neutral-100">
+          <div className="flex items-center justify-between gap-4">
+            <h3 className="text-left text-lg font-bold font-['Futura'] text-neutral-100">
               {achievement.company}
             </h3>
             {achievement.logo ? (
