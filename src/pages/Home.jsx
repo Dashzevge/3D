@@ -199,7 +199,10 @@ const Home = () => {
     >
       <HomeText />
       <ParallaxBackground scrollProgress={smoothProgress} />
-      <div className="absolute bottom-10 left-6 z-20 flex w-72 flex-col gap-3 md:bottom-14 md:left-10 md:w-75">
+      <div
+        className="absolute bottom-10 left-6 z-20 flex w-72 flex-col gap-3 md:bottom-14 md:left-10 md:w-75"
+        style={isMobile ? { transform: "scale(0.6)", transformOrigin: "left bottom" } : undefined}
+      >
         <div className="relative w-full overflow-hidden rounded-full bg-white/10 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur">
           <motion.div
             className="pointer-events-none absolute inset-0 rounded-full bg-white/20"
@@ -219,9 +222,11 @@ const Home = () => {
                   {progressPct >= 100 ? "🏁" : "🚀"}
                 </span>
               </span>
-              <span className="whitespace-nowrap">
-                {progressPct >= 100 ? "Arrived Destination" : "Scroll to launch"}
-              </span>
+              {!isMobile && (
+                <span className="whitespace-nowrap">
+                  {progressPct >= 100 ? "Arrived Destination" : "Scroll to launch"}
+                </span>
+              )}
             </span>
             <span className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-semibold tracking-[0.2em] text-white">
               {progressPct}%
@@ -236,12 +241,16 @@ const Home = () => {
         </div>
       </div>
       <div className="absolute bottom-10 right-6 z-20 w-64 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-neutral-200 backdrop-blur md:bottom-14 md:right-10 md:w-100">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
-          Step {stepIndex + 1} / {steps.length}
-        </div>
-        <div className="mt-1 text-lg font-semibold text-white">
-          {steps[stepIndex]}
-        </div>
+        {!isMobile && (
+          <div className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
+            Step {stepIndex + 1} / {steps.length}
+          </div>
+        )}
+        {!isMobile && (
+          <div className="mt-1 text-lg font-semibold text-white">
+            {steps[stepIndex]}
+          </div>
+        )}
         {stepDescriptions[stepIndex]}
       </div>
       {progressPct >= 100 && (
