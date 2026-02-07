@@ -246,9 +246,9 @@ const Home = () => {
       </div>
       {progressPct >= 100 && (
         <img
-          src="/mongolia-logo.png"
-          alt="Mongolia flag"
-          className="absolute right-16 top-20 z-30 h-25 w-auto drop-shadow-[0_10px_30px_rgba(255,255,255,0.15)] md:right-28 md:top-24 md:h-30"
+          src="/earth.png"
+          alt="Earth Image"
+          className="absolute right-16 top-20 z-30 h-25 w-auto drop-shadow-[0_10px_30px_rgba(255,255,255,0.60)] md:right-56 md:top-26 md:h-30"
         />
       )}
       <figure

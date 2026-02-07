@@ -5,8 +5,8 @@ import { FiDownload, FiMenu, FiX } from "react-icons/fi";
 import { Frameworks } from "../components/Frameworks";
 const SatelliteLogo = "/satellite.svg";
 import skillsBackground from "../assets/projects/skills_background.jpg";
-import achievementsBackground from "../assets/projects/achievements.jpg";
-import projectsBackground from "../assets/projects/project-3.jpg";
+import achievementsBackground from "../assets/projects/achievements_background.jpg";
+import projectsBackground from "../assets/projects/projects_background.jpg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

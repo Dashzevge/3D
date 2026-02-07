@@ -79,6 +79,10 @@ body {
   @apply text-neutral-400 text-sm md:text-base text-pretty;
 }
 
+.text-justify {
+  text-align: justify;
+}
+
 /* Navigation */
 .nav-ul {
   @apply flex flex-col items-center gap-4 sm:flex-row md:gap-6 relative z-20;

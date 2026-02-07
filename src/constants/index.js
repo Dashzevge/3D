@@ -1,7 +1,17 @@
-import project1 from "../assets/projects/project-1.jpg";
+import project1 from "../assets/projects/project-1.png";
+import project1_1 from "../assets/projects/project-1.1.png";
+import project1_2 from "../assets/projects/project-1.2.png";
+import project1_3 from "../assets/projects/project-1.3.png";
+import project1_4 from "../assets/projects/project-1.4.png";
 import project2 from "../assets/projects/project-2.jpg";
 import project3 from "../assets/projects/project-3.jpg";
-import project4 from "../assets/projects/project-4.jpg";
+import project4 from "../assets/projects/project-4.png";
+import project4_1 from "../assets/projects/project-4.1.png";
+import project4_2 from "../assets/projects/project-4.2.png";
+import project4_3 from "../assets/projects/project-4.3.png";
+import mofLogo from "../assets/companies/mof_logo.png";
+import ibiLogo from "../assets/companies/ibi_logo.png";
+import mongolsatLogo from "../assets/companies/mongolsat_logo.png";
 
 import {
   RiReactjsLine,
@@ -39,13 +49,14 @@ import {
   SiSelenium,
   SiSpring,
   SiSpringsecurity,
+  SiSwagger,
   SiTypescript,
   SiPython,
 } from "react-icons/si";
 
 import { DiVisualstudio } from "react-icons/di";
 import { TbBrandVisualStudio } from "react-icons/tb";
-import { FaNodeJs, FaJava, FaAws, FaDatabase } from "react-icons/fa";
+import { FaNodeJs, FaJava, FaAws, FaDatabase, FaWindows } from "react-icons/fa";
 
 export const HERO_CONTENT = `I’m a Senior Full Stack Software Engineer with 8+ years of experience building scalable, cloud-native, high-availability web applications. I specialize in modern frontend development with Angular and React, and backend systems using Java/Spring Boot, Node.js, and SQL/NoSQL databases.
 
@@ -99,6 +110,15 @@ export const SKILLS = [
       "Built RESTful APIs using Python and Flask, implementing CRUD operations, authentication, validation, and database integrations for microservice-style backends.",
     group: "Backend",
   },
+  {
+    Icon: FaWindows,
+    color: "text-blue-500",
+    label: "IIS Server",
+    years: 3,
+    description:
+      "Hosted and maintained IIS deployments, configuring application pools, SSL bindings, and environment settings for reliable web app delivery.",
+    group: "DevOps",
+  },
 
 
   // Databases
@@ -134,7 +154,7 @@ export const SKILLS = [
   {
     Icon: RiCss3Fill,
     color: "text-blue-400",
-    label: "CSS3 (SASS)",
+    label: "CSS3",
     years: 8,
     description:
       "Built responsive UI systems with SASS and modern layout techniques; maintained consistent styling across large apps.",
@@ -378,8 +398,8 @@ export const SKILLS = [
     group: "Cloud & Tools",
   },
   {
-    Icon: FaAws,
-    color: "text-orange-500",
+    Icon: SiSwagger,
+    color: "text-green-500",
     label: "RestAssured",
     years: 4,
     description:
@@ -481,6 +501,7 @@ export const ACHIEVEMENTS = [
     duration: "1 yr 8 mos",
     title: "Junior Software Developer",
     company: "Ministry of Finance, Mongolia",
+    logo: mofLogo,
     employmentType: "Contract",
     location: "Ulaanbaatar, Mongolia",
     workMode: "On-site",
@@ -495,6 +516,7 @@ export const ACHIEVEMENTS = [
     duration: "3 yrs 4 mos",
     title: "Full Stack Developer",
     company: "Interactive BI LLC",
+    logo: ibiLogo,
     employmentType: "Full-time",
     location: "Ulaanbaatar, Mongolia",
     workMode: "On-site",
@@ -509,11 +531,12 @@ export const ACHIEVEMENTS = [
     duration: "5 yrs 10 mos",
     title: "Senior Full Stack Developer",
     company: "MongolSat Networks LLC",
+    logo: mongolsatLogo,
     employmentType: "Full-time",
     location: "Ulaanbaatar, Mongolia",
     workMode: "Remote",
     responsibility: [
-      "Built cloud-native Angular apps and Spring Boot microservices powering customer-facing and internal platforms.",
+      "Built cloud-native React web apps and Spring Boot microservices powering customer-facing and internal platforms.",
       "Implemented 50+ secure REST microservices with Spring Security, JWT, Redis, and CI/CD pipelines.",
       "Integrated payment APIs and improved transaction performance; led code reviews and mentored engineers.",
     ],
@@ -522,32 +545,44 @@ export const ACHIEVEMENTS = [
 
 export const PROJECTS = [
   {
-    title: "MongolSat Customer & Service Management Platform",
+    id: 1,
+    title: "MongolSat Content & Streaming Platform",
     image: project1,
-    description:
+    description: "Full-stack platform for managing content, services, and subscriptions in the telecom/media domain.",
+    subDescription:
       "Led end-to-end development of customer-facing and internal enterprise systems, delivering secure payments, scalable web apps, and cloud-native services supporting telecom/media workflows.",
-    technologies: ["Java", "Spring Boot", "RESTful APIs", "Angular/React", "MySQL", "AWS"],
-    link: "https://www.mongolsat.mn",
+    skills: ["Java", "Spring Boot", "RESTful APIs", "React", "MySQL", "AWS"],
+    href: "https://www.mongolsat.mn",
   },
   {
+    id: 2,
     title: "Satellite Operations & Task Tracking",
+    description: "Internal web tools for tracking tasks, assignments, and progress across teams, supporting operational workflows and reporting.",
     image: project2,
-    description:
+    subDescription:
       "Internal web tools for tracking tasks, assignments, and progress across teams, supporting operational workflows and reporting.",
-    technologies: ["HTML", "CSS", "JavaScript", "IIS"],
+    skills: ["HTML5", "CSS3", "JavaScript", "MySQL", "IIS Server"],
+    href: "https://www.mongolsat.mn",
   },
   {
-    title: "Inventory Management System",
+    id: 3,
+    title: "ERP Inventory Management System",
+    description: "Enterprise inventory system focusing on accurate tracking and reporting, with performance-optimized database workflows.",
     image: project3,
-    description:
+    subDescription:
       "Enterprise inventory system focusing on accurate tracking and reporting, with performance-optimized database workflows.",
-    technologies: ["Node.js", "JavaScript", "SQL Server/MySQL", "HTML", "CSS", "Bootstrap"],
+    skills: ["Java", "JavaScript", "SQL Server/MySQL", "HTML", "CSS", "Bootstrap"],
+    href: "https://www.mongolsat.mn",
   },
   {
+    id: 4,
     title: "Kinder Garden Website",
+    description: "Kids-focused website with modern UI and content pages, built for a small organization to improve online presence.",
     image: project4,
-    description:
+    subDescription:
       "Public-facing website with modern UI and content pages, built for a small organization to improve online presence.",
-    technologies: ["HTML", "CSS", "Vue.js", "Express", "MySQL"],
+    skills: ["HTML5", "CSS3", "JavaScript", "Node.js", "MySQL"],
+    href: "https://www.basarkhan.mn",
   },
 ];
+

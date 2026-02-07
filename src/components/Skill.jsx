@@ -10,8 +10,8 @@ const Skill = ({ Icon, color, label, description, years }) => {
           <p className="text-sm text-neutral-400">{description}</p>
         </div>
       </div>
-      <div className="flex items-center text-cyan-400 text-xl font-bold sm:ml-6 shrink-0">
-        <span className="mr-3 h-6 w-[3px] rounded-full bg-cyan-400"></span>
+      <div className="flex items-center self-stretch text-cyan-400 text-xl font-bold sm:ml-6 shrink-0">
+        <span className="mr-3 self-stretch w-[3px] rounded-full bg-cyan-400"></span>
         {years} yrs
       </div>
     </div>
