@@ -1,16 +1,49 @@
-# React + Vite
+# 3D Portfolio Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio web app built with React, 3D visuals, animations, and responsive UI sections for Home, Skills, Projects, and Achievements.
 
-Currently, two official plugins are available:
+## Tools and Libraries Used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Core
+- React 19
+- React DOM 19
+- React Router DOM
 
-## React Compiler
+### 3D and Graphics
+- Three.js
+- @react-three/fiber
+- @react-three/drei
+- maath
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Animation and UI
+- motion
+- React Icons
+- react-responsive
+- tailwindcss
+- tailwind-merge
 
-## Expanding the ESLint configuration
+### Build and Tooling
+- Vite
+- @vitejs/plugin-react
+- @tailwindcss/vite
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Code Quality
+- ESLint
+- @eslint/js
+- eslint-plugin-react-hooks
+- eslint-plugin-react-refresh
+- globals
+
+## Available Scripts
+
+- `npm run dev` - start local development server
+- `npm run build` - build production bundle
+- `npm run preview` - preview production build locally
+- `npm run lint` - run lint checks
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```

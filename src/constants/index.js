@@ -551,7 +551,7 @@ export const PROJECTS = [
     description: "Full-stack platform for managing content, services, and subscriptions in the telecom/media domain.",
     subDescription:
       "Led end-to-end development of customer-facing and internal enterprise systems, delivering secure payments, scalable web apps, and cloud-native services supporting telecom/media workflows.",
-    skills: ["Java", "Spring Boot", "RESTful APIs", "React", "MySQL", "AWS"],
+    skills: ["Java", "Spring Boot", "React", "Redux", "MySQL", "AWS"],
     href: "https://www.mongolsat.mn",
   },
   {
@@ -561,7 +561,7 @@ export const PROJECTS = [
     image: project2,
     subDescription:
       "Internal web tools for tracking tasks, assignments, and progress across teams, supporting operational workflows and reporting.",
-    skills: ["HTML5", "CSS3", "JavaScript", "MySQL", "IIS Server"],
+    skills: ["React", "HTML5", "CSS3", "JavaScript", "MySQL", "IIS Server"],
     href: "https://www.mongolsat.mn",
   },
   {
@@ -571,7 +571,7 @@ export const PROJECTS = [
     image: project3,
     subDescription:
       "Enterprise inventory system focusing on accurate tracking and reporting, with performance-optimized database workflows.",
-    skills: ["Java", "JavaScript", "SQL Server/MySQL", "HTML", "CSS", "Bootstrap"],
+    skills: ["Java", "JavaScript", "SQL Server", "HTML5", "CSS3", "Bootstrap"],
     href: "https://www.mongolsat.mn",
   },
   {
@@ -581,7 +581,7 @@ export const PROJECTS = [
     image: project4,
     subDescription:
       "Public-facing website with modern UI and content pages, built for a small organization to improve online presence.",
-    skills: ["HTML5", "CSS3", "JavaScript", "Node.js", "MySQL"],
+    skills: ["HTML5", "CSS3", "JavaScript", "Bootstrap", "Node.js", "MySQL"],
     href: "https://www.basarkhan.mn",
   },
 ];

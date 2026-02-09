@@ -7,7 +7,6 @@ const skillIconMap = new Map(
 );
 const ProjectDetails = ({
   title,
-  description,
   subDescription,
   image,
   skills,
@@ -30,16 +29,7 @@ const ProjectDetails = ({
         <img src={image} alt={title} className="w-full rounded-t-2xl" />
         <div className="p-5">
           <h5 className="mb-2 text-2xl font-bold text-white">{title}</h5>
-          <p className="mb-3 font-normal text-neutral-400">{description}</p>
-          {Array.isArray(subDescription) ? (
-            subDescription.map((subDesc, index) => (
-              <p key={`${title}-sub-${index}`} className="mb-3 font-normal text-neutral-400">
-                {subDesc}
-              </p>
-            ))
-          ) : (
-            <p className="mb-3 font-normal text-neutral-400">{subDescription}</p>
-          )}
+          <p className="mb-3 font-normal text-neutral-400">{subDescription}</p>
           <div className="flex items-center justify-between mt-4">
             <div className="flex flex-wrap items-center gap-3">
               {skills.map((skillName) => {
@@ -56,17 +46,17 @@ const ProjectDetails = ({
                 }
                 const Icon = skill.Icon;
                 return (
-                <Link
-                  key={skillName}
-                  to={`/skills?search=${encodeURIComponent(skill.label)}`}
-                  className={`rounded-full border border-neutral-800 bg-neutral-950/70 p-2 text-lg ${skill.color}`}
-                  title={skillName}
-                  aria-label={skillName}
-                >
-                  <Icon />
-                </Link>
-              );
-            })}
+                  <Link
+                    key={skillName}
+                    to={`/skills?search=${encodeURIComponent(skill.label)}`}
+                    className={`rounded-full border border-neutral-800 bg-neutral-950/70 p-2 text-lg transition shadow-[0_0_0px_rgba(34,211,238,0)] hover:border-cyan-300/70 hover:shadow-[0_0_12px_rgba(34,211,238,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 ${skill.color}`}
+                    title={skillName}
+                    aria-label={skillName}
+                  >
+                    <Icon />
+                  </Link>
+                );
+              })}
             </div>
             <a
               href={href}

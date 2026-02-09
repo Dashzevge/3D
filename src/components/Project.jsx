@@ -25,7 +25,8 @@ const Project = ({
         onMouseLeave={() => setPreview(null)}
       >
         <div>
-          <p className="text-2xl">{title}</p>
+          <h1 className="text-2xl">{title}</h1>
+          <p className="mt-2 text-neutral-400">{description}</p>
           <div className="flex flex-wrap items-center gap-3 mt-2 text-sand">
             {skills.map((skillName) => {
               const skill = skillIconMap.get(skillName.toLowerCase());
@@ -39,16 +40,15 @@ const Project = ({
                   </span>
                 );
               }
-              const Icon = skill.Icon;
               return (
                 <Link
                   key={skillName}
                   to={`/skills?search=${encodeURIComponent(skill.label)}`}
-                  className={`rounded-full border border-neutral-800 bg-neutral-950/70 p-2 text-lg ${skill.color}`}
+                  className={`rounded-full border border-neutral-800 bg-neutral-950/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] transition shadow-[0_0_0px_rgba(34,211,238,0)] hover:border-cyan-300/70 hover:shadow-[0_0_12px_rgba(34,211,238,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 ${skill.color}`}
                   title={skillName}
                   aria-label={skillName}
                 >
-                  <Icon />
+                  {skill.label}
                 </Link>
               );
             })}
@@ -66,7 +66,6 @@ const Project = ({
       {isHidden && (
         <ProjectDetails
           title={title}
-          description={description}
           subDescription={subDescription}
           image={image}
           skills={skills}

@@ -37,7 +37,7 @@ const AchievementItem = ({ achievement, isLeft }) => {
               <img
                 src={achievement.logo}
                 alt={`${achievement.company} logo`}
-                className="h-15 w-15 shrink-0 self-center rounded-sm object-contain object-center"
+                className="h-[4.875rem] w-[4.875rem] shrink-0 self-center rounded-sm object-contain object-center"
                 loading="lazy"
               />
             ) : null}
