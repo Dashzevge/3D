@@ -6,6 +6,7 @@ import { Frameworks } from "../components/Frameworks";
 import skillsBackground from "../assets/projects/skills_background.jpg";
 import achievementsBackground from "../assets/projects/achievements_background.jpg";
 import projectsBackground from "../assets/projects/projects_background.jpg";
+import resumeFile from "../assets/Resume.pdf";
 
 const SatelliteLogo = "/satellite.svg";
 
@@ -149,7 +150,7 @@ const Navbar = () => {
             {/* Resume */}
             <div className="hidden md:flex items-center">
               <motion.a
-                href="/Dash Bumchin.pdf"
+                href={resumeFile}
                 download
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
@@ -236,7 +237,7 @@ const Navbar = () => {
                   className="mt-4 flex items-center gap-4"
                 >
                   <motion.a
-                    href="/Resume.pdf"
+                    href={resumeFile}
                     download
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
