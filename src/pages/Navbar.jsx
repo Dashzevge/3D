@@ -236,7 +236,7 @@ const Navbar = () => {
                   className="mt-4 flex items-center gap-4"
                 >
                   <motion.a
-                    href="/Dash Bumchin.pdf"
+                    href="/Resume.pdf"
                     download
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import { SKILLS } from "../constants";
@@ -9,10 +10,18 @@ const ProjectDetails = ({
   title,
   subDescription,
   image,
+  relatedImages,
   skills,
   href,
   closeModal,
 }) => {
+  const images = relatedImages?.length ? relatedImages : [image];
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const showPrev = () =>
+    setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
+  const showNext = () => setActiveIndex((prev) => (prev + 1) % images.length);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-full overflow-hidden backdrop-blur-sm">
       <motion.div
@@ -22,11 +31,48 @@ const ProjectDetails = ({
       >
         <button
           onClick={closeModal}
-          className="absolute p-2 rounded-sm top-5 right-5 bg-midnight hover:bg-gray-500"
+          className="absolute z-20 p-2 rounded-sm top-5 right-5 bg-midnight/90 hover:bg-gray-500"
+          aria-label="Close project details"
         >
-          <img src="assets/close.svg" className="w-6 h-6" />
+          <img src="/assets/close.svg" className="w-6 h-6" alt="Close" />
         </button>
-        <img src={image} alt={title} className="w-full rounded-t-2xl" />
+        <div className="relative">
+          <img
+            src={images[activeIndex]}
+            alt={`${title} screenshot ${activeIndex + 1}`}
+            className="w-full rounded-t-2xl"
+          />
+          {images.length > 1 && (
+            <>
+              <button
+                onClick={showPrev}
+                className="absolute z-10 grid w-10 h-10 text-xl text-white -translate-y-1/2 rounded-full left-3 top-1/2 place-items-center bg-black/40 hover:bg-black/60"
+                aria-label="Previous image"
+              >
+                ‹
+              </button>
+              <button
+                onClick={showNext}
+                className="absolute z-10 grid w-10 h-10 text-xl text-white -translate-y-1/2 rounded-full right-3 top-1/2 place-items-center bg-black/40 hover:bg-black/60"
+                aria-label="Next image"
+              >
+                ›
+              </button>
+              <div className="absolute flex items-center gap-2 -translate-x-1/2 bottom-3 left-1/2">
+                {images.map((_, index) => (
+                  <button
+                    key={`${title}-dot-${index}`}
+                    onClick={() => setActiveIndex(index)}
+                    className={`h-2.5 w-2.5 rounded-full transition ${
+                      index === activeIndex ? "bg-cyan-300" : "bg-white/50 hover:bg-white/80"
+                    }`}
+                    aria-label={`Show image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
         <div className="p-5">
           <h5 className="mb-2 text-2xl font-bold text-white">{title}</h5>
           <p className="mb-3 font-normal text-neutral-400">{subDescription}</p>

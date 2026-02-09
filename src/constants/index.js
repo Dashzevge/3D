@@ -3,7 +3,10 @@ import project1_1 from "../assets/projects/project-1.1.png";
 import project1_2 from "../assets/projects/project-1.2.png";
 import project1_3 from "../assets/projects/project-1.3.png";
 import project1_4 from "../assets/projects/project-1.4.png";
-import project2 from "../assets/projects/project-2.jpg";
+import project2 from "../assets/projects/project-2.png";
+import project2_1 from "../assets/projects/project-2.1.png";
+import project2_2 from "../assets/projects/project-2.2.png";
+import project2_3 from "../assets/projects/project-2.3.png";
 import project3 from "../assets/projects/project-3.jpg";
 import project4 from "../assets/projects/project-4.png";
 import project4_1 from "../assets/projects/project-4.1.png";
@@ -548,6 +551,7 @@ export const PROJECTS = [
     id: 1,
     title: "MongolSat Content & Streaming Platform",
     image: project1,
+    relatedImages: [project1, project1_1, project1_2, project1_3, project1_4],
     description: "Full-stack platform for managing content, services, and subscriptions in the telecom/media domain.",
     subDescription:
       "Led end-to-end development of customer-facing and internal enterprise systems, delivering secure payments, scalable web apps, and cloud-native services supporting telecom/media workflows.",
@@ -555,20 +559,23 @@ export const PROJECTS = [
     href: "https://www.mongolsat.mn",
   },
   {
-    id: 2,
-    title: "Satellite Operations & Task Tracking",
-    description: "Internal web tools for tracking tasks, assignments, and progress across teams, supporting operational workflows and reporting.",
-    image: project2,
-    subDescription:
-      "Internal web tools for tracking tasks, assignments, and progress across teams, supporting operational workflows and reporting.",
-    skills: ["React", "HTML5", "CSS3", "JavaScript", "MySQL", "IIS Server"],
-    href: "https://www.mongolsat.mn",
+  id: 2,
+  title: "Satellite Operations & Broadband Service Portal",
+  description:
+    "Customer-facing portal enabling real-time tracking of payments, data usage, and service activity through interactive dashboards.",
+  image: project2,
+  relatedImages: [project2, project2_1, project2_2, project2_3],
+  subDescription:
+    "Designed and developed a web platform that provides real-time insights into satellite broadband usage, transactions, and service progress via intuitive dashboards.",
+  skills: ["React", "HTML5", "CSS3", "JavaScript", "MySQL", "IIS Server"],
+  href: "https://www.isatcom.mn"
   },
   {
     id: 3,
     title: "ERP Inventory Management System",
-    description: "Enterprise inventory system focusing on accurate tracking and reporting, with performance-optimized database workflows.",
+    description: "Enterprise system focusing on accurate tracking and reporting, with performance-optimized database workflows.",
     image: project3,
+    relatedImages: [project3],
     subDescription:
       "Enterprise inventory system focusing on accurate tracking and reporting, with performance-optimized database workflows.",
     skills: ["Java", "JavaScript", "SQL Server", "HTML5", "CSS3", "Bootstrap"],
@@ -579,10 +586,10 @@ export const PROJECTS = [
     title: "Kinder Garden Website",
     description: "Kids-focused website with modern UI and content pages, built for a small organization to improve online presence.",
     image: project4,
+    relatedImages: [project4, project4_1, project4_2, project4_3],
     subDescription:
       "Public-facing website with modern UI and content pages, built for a small organization to improve online presence.",
     skills: ["HTML5", "CSS3", "JavaScript", "Bootstrap", "Node.js", "MySQL"],
     href: "https://www.basarkhan.mn",
   },
 ];
-

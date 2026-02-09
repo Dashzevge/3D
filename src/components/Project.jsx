@@ -13,6 +13,7 @@ const Project = ({
   subDescription,
   href,
   image,
+  relatedImages,
   skills,
   setPreview,
 }) => {
@@ -68,6 +69,7 @@ const Project = ({
           title={title}
           subDescription={subDescription}
           image={image}
+          relatedImages={relatedImages}
           skills={skills}
           href={href}
           closeModal={() => setIsHidden(false)}

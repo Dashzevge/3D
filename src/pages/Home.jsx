@@ -54,14 +54,13 @@ const Home = () => {
   };
   const stepDescriptions = [
      <div className="flex flex-col items-center sm:flex-row">
-                  <img className="w-32 rounded-full" src={profileImage} alt="Dash Bumchin"/>
+                  {!isMobile && <img className="w-32 rounded-full" src={profileImage} alt="Dash Bumchin" />}
                   <div className="mt-2 flex flex-col sm:ml-6 sm:mt-0">
                     <h4 className="text-lg">Dashzevge Bumchin</h4>
-                    <p className="mt-2 block text-sm font-thin">
-                      I&apos;m a <strong>full stack developer</strong> from <strong>Mongolia</strong> 🇲🇳 with{" "}
-                      <strong>9+ years</strong> of expertise in designing and developing{" "}
-                      <strong>web and enterprise applications</strong>.
-                    </p>
+                  <p className="mt-2 block text-sm font-thin">
+                    <strong>Full-stack developer</strong> for <strong>8+ years</strong>,
+                    developing reliable <strong>web and enterprise applications</strong> from idea to production.
+                  </p>
                   </div>
       </div>,
       <div className="inline-flex items-center justify-center gap-3 px-4 py-2">
@@ -253,11 +252,11 @@ const Home = () => {
         )}
         {stepDescriptions[stepIndex]}
       </div>
-      {progressPct >= 100 && (
+      {!isMobile && progressPct >= 100 && (
         <img
           src="/earth.png"
           alt="Earth Image"
-          className="absolute right-16 top-20 z-30 h-25 w-auto drop-shadow-[0_10px_30px_rgba(255,255,255,0.60)] md:right-56 md:top-26 md:h-30"
+          className="absolute right-16 top-20 z-30 h-[9.375rem] w-auto drop-shadow-[0_10px_30px_rgba(255,255,255,0.60)] md:right-56 md:top-26 md:h-[9.25rem]"
         />
       )}
       <figure
