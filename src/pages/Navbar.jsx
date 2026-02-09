@@ -6,9 +6,10 @@ import { Frameworks } from "../components/Frameworks";
 import skillsBackground from "../assets/projects/skills_background.jpg";
 import achievementsBackground from "../assets/projects/achievements_background.jpg";
 import projectsBackground from "../assets/projects/projects_background.jpg";
-import resumeFile from "../assets/Resume.pdf";
 
 const SatelliteLogo = "/satellite.svg";
+const resumeFile = "/Resume.pdf";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -238,7 +239,7 @@ const Navbar = () => {
                 >
                   <motion.a
                     href={resumeFile}
-                    download
+                    download="Dash_Bumchin_Resume.pdf"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
                     className="
