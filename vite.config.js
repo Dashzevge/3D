@@ -6,5 +6,5 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   assetsInclude: ['**/*.glb', '**/*.gltf'],
-  base: process.env.VITE_BASE_PATH || '/3D',
+  base: process.env.VITE_BASE_PATH || '/',
 })

@@ -1,9 +1,11 @@
+import { Suspense, lazy } from "react";
 import Navbar from "./pages/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Projects from "./pages/Projects";
-import Skills from "./pages/Skills";
-import Achievements from "./pages/Achievements"
+
+const Projects = lazy(() => import("./pages/Projects"));
+const Skills = lazy(() => import("./pages/Skills"));
+const Achievements = lazy(() => import("./pages/Achievements"));
 
 const App = () => {
 
@@ -19,19 +21,21 @@ const App = () => {
         <nav>
           <Navbar />
         </nav>
-        <Routes>
-          <Route
-            path="/"
-            element={
+        <Suspense fallback={<div className="px-6 py-10 text-sm text-neutral-400">Loading...</div>}>
+          <Routes>
+            <Route
+              path="/"
+              element={
                 <div className="container mx-auto max-w-7xl">
-                <Home />
-              </div>
-            }
-          />
-          <Route path="/achievements" element={<Achievements />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/skills" element={<Skills />} />
-        </Routes>
+                  <Home />
+                </div>
+              }
+            />
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/skills" element={<Skills />} />
+          </Routes>
+        </Suspense>
       </div>
     </div>
   );

@@ -1,11 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { FiDownload, FiMenu, FiX } from "react-icons/fi";
-import { Frameworks } from "../components/Frameworks";
 import skillsBackground from "../assets/projects/skills_background.jpg";
 import achievementsBackground from "../assets/projects/achievements_background.jpg";
 import projectsBackground from "../assets/projects/projects_background.jpg";
+
+const Frameworks = lazy(() =>
+  import("../components/Frameworks").then((module) => ({ default: module.Frameworks }))
+);
 
 const SatelliteLogo = "/satellite.svg";
 const resumeFile = "/Resume.pdf";
@@ -176,7 +179,9 @@ const Navbar = () => {
         {showFrameworks && (
           <div className="absolute top-6 right-1 z-40 hidden lg:block pointer-events-none">
             <div className="h-[160px] w-[240px] opacity-70">
-              <Frameworks />
+              <Suspense fallback={null}>
+                <Frameworks />
+              </Suspense>
             </div>
           </div>
         )}

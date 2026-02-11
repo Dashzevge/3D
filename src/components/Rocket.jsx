@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
-import { useMotionValue, useSpring, useTransform } from "motion/react";
+import { useSpring, useTransform } from "motion/react";
 import { useFrame } from "@react-three/fiber";
 import rocketUrl from "../models/rocket.glb";
 
@@ -8,18 +8,18 @@ export function Rocket({
   scrollProgress,          // MotionValue 0..1 from useScroll
   from = [0.5, -1.5, 0.5],  // Point A
   to = [2.2, 1.2, -2.5],    // Point B
-  orbitCenter = null,       // [x, y, z]
-  orbitRadius = 0.5,
-  orbitHeight = 0,
-  orbitStartAt = 0.75,      // start orbit on last 25% of scroll
-  orbitTurns = 1.5,         // number of turns during orbit segment
-  dockPosition = null,      // [x, y, z] final position at 100%
-  dockAt = 0.995,           // progress where final docking begins
   rotFrom = 0.4,            // optional yaw start
   rotTo = 1.2,              // optional yaw end
+  orbitStart = 0.85,        // start orbit near destination
+  orbitRadius = 2.0,        // orbit radius around destination
+  orbitSpeed = 1.2,         // radians per second
+  orbitHeight = 0.40,       // subtle up/down while orbiting
+  orbitFacingOffset = Math.PI, // keep nose leading during orbit
   ...props
 }) {
   const group = useRef();
+  const orbitAngleRef = useRef(0);
+  const wasOrbitingRef = useRef(false);
   const { nodes, materials, animations } = useGLTF(rocketUrl);
   const { actions, mixer } = useAnimations(animations, group);
 
@@ -53,42 +53,45 @@ export function Rocket({
 
     // apply scroll-driven transforms
     if (hasScroll) {
-      const p = smooth.get();
-      const hasOrbit = Array.isArray(orbitCenter) && orbitCenter.length === 3;
-      const hasDock = Array.isArray(dockPosition) && dockPosition.length === 3;
+      const progress = Math.min(1, Math.max(0, smooth.get()));
+      const linearX = x.get();
+      const linearY = y.get();
+      const linearZ = z.get();
 
-      if (p <= 0.001) {
-        group.current.position.set(from[0], from[1], from[2]);
-        group.current.rotation.set(0, rotFrom, 0);
+      if (progress < orbitStart) {
+        wasOrbitingRef.current = false;
+        group.current.position.set(linearX, linearY, linearZ);
+        group.current.rotation.y = rotY.get();
         return;
       }
 
-      if (hasDock && p >= dockAt) {
-        group.current.position.set(dockPosition[0], dockPosition[1], dockPosition[2]);
-        if (hasOrbit) {
-          group.current.lookAt(orbitCenter[0], orbitCenter[1], orbitCenter[2]);
-        } else {
-          group.current.rotation.set(0, rotTo, 0);
-        }
-        return;
+      const centerX = to[0];
+      const centerY = to[1];
+      const centerZ = to[2];
+
+      if (!wasOrbitingRef.current) {
+        orbitAngleRef.current = Math.atan2(linearZ - centerZ, linearX - centerX);
+        wasOrbitingRef.current = true;
       }
 
-      if (hasOrbit && p >= orbitStartAt) {
-        const t = Math.min(1, (p - orbitStartAt) / Math.max(0.0001, 1 - orbitStartAt));
-        const angle = t * Math.PI * 2 * orbitTurns;
-        const cx = orbitCenter[0];
-        const cy = orbitCenter[1] + orbitHeight;
-        const cz = orbitCenter[2];
-        const px = cx + Math.cos(angle) * orbitRadius;
-        const py = cy + Math.sin(angle) * orbitRadius * 0.35;
-        const pz = cz + Math.sin(angle) * orbitRadius;
+      orbitAngleRef.current += delta * orbitSpeed;
+      const orbitProgress = (progress - orbitStart) / Math.max(1e-6, 1 - orbitStart);
+      const startRadius = Math.max(0.001, Math.hypot(linearX - centerX, linearZ - centerZ));
+      const radius = startRadius + (orbitRadius - startRadius) * Math.min(1, orbitProgress * 1.5);
 
-        group.current.position.set(px, py, pz);
-        group.current.lookAt(cx, cy, cz);
-      } else {
-        group.current.position.set(x.get(), y.get(), z.get());
-        group.current.rotation.set(0, rotY.get(), 0);
-      }
+      const orbitX = centerX + Math.cos(orbitAngleRef.current) * radius;
+      const orbitZ = centerZ + Math.sin(orbitAngleRef.current) * radius;
+      const orbitY = centerY + Math.sin(orbitAngleRef.current * 2) * orbitHeight;
+      const blend = Math.min(1, orbitProgress * 4);
+
+      const posX = linearX + (orbitX - linearX) * blend;
+      const posY = linearY + (orbitY - linearY) * blend;
+      const posZ = linearZ + (orbitZ - linearZ) * blend;
+      group.current.position.set(posX, posY, posZ);
+
+      const tangentX = -Math.sin(orbitAngleRef.current);
+      const tangentZ = Math.cos(orbitAngleRef.current);
+      group.current.rotation.y = Math.atan2(tangentX, tangentZ) + orbitFacingOffset;
     }
   });
 

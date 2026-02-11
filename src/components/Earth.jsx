@@ -1,11 +1,10 @@
 import React, { useRef } from 'react'
-import { useGLTF, useAnimations } from '@react-three/drei'
-import earthUrl from "../models/planet_earth.glb";
+import { useGLTF } from '@react-three/drei'
+import earthUrl from "../models/earth.glb";
 
-export function Earth(props) {
+export function Model(props) {
   const group = useRef()
-  const { nodes, materials, animations } = useGLTF(earthUrl)
-  const { actions } = useAnimations(animations, group)
+  const { nodes, materials } = useGLTF(earthUrl)
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Sketchfab_Scene">
@@ -129,5 +128,3 @@ export function Earth(props) {
     </group>
   )
 }
-
-useGLTF.preload(earthUrl)
