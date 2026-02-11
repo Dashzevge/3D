@@ -8,6 +8,13 @@ export function Rocket({
   scrollProgress,          // MotionValue 0..1 from useScroll
   from = [0.5, -1.5, 0.5],  // Point A
   to = [2.2, 1.2, -2.5],    // Point B
+  orbitCenter = null,       // [x, y, z]
+  orbitRadius = 0.5,
+  orbitHeight = 0,
+  orbitStartAt = 0.75,      // start orbit on last 25% of scroll
+  orbitTurns = 1.5,         // number of turns during orbit segment
+  dockPosition = null,      // [x, y, z] final position at 100%
+  dockAt = 0.995,           // progress where final docking begins
   rotFrom = 0.4,            // optional yaw start
   rotTo = 1.2,              // optional yaw end
   ...props
@@ -46,8 +53,42 @@ export function Rocket({
 
     // apply scroll-driven transforms
     if (hasScroll) {
-      group.current.position.set(x.get(), y.get(), z.get());
-      group.current.rotation.y = rotY.get();
+      const p = smooth.get();
+      const hasOrbit = Array.isArray(orbitCenter) && orbitCenter.length === 3;
+      const hasDock = Array.isArray(dockPosition) && dockPosition.length === 3;
+
+      if (p <= 0.001) {
+        group.current.position.set(from[0], from[1], from[2]);
+        group.current.rotation.set(0, rotFrom, 0);
+        return;
+      }
+
+      if (hasDock && p >= dockAt) {
+        group.current.position.set(dockPosition[0], dockPosition[1], dockPosition[2]);
+        if (hasOrbit) {
+          group.current.lookAt(orbitCenter[0], orbitCenter[1], orbitCenter[2]);
+        } else {
+          group.current.rotation.set(0, rotTo, 0);
+        }
+        return;
+      }
+
+      if (hasOrbit && p >= orbitStartAt) {
+        const t = Math.min(1, (p - orbitStartAt) / Math.max(0.0001, 1 - orbitStartAt));
+        const angle = t * Math.PI * 2 * orbitTurns;
+        const cx = orbitCenter[0];
+        const cy = orbitCenter[1] + orbitHeight;
+        const cz = orbitCenter[2];
+        const px = cx + Math.cos(angle) * orbitRadius;
+        const py = cy + Math.sin(angle) * orbitRadius * 0.35;
+        const pz = cz + Math.sin(angle) * orbitRadius;
+
+        group.current.position.set(px, py, pz);
+        group.current.lookAt(cx, cy, cz);
+      } else {
+        group.current.position.set(x.get(), y.get(), z.get());
+        group.current.rotation.set(0, rotY.get(), 0);
+      }
     }
   });
 

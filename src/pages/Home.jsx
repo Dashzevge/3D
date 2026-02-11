@@ -2,6 +2,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import HomeText from "../components/HomeText";
 import ParallaxBackground from "../components/ParallaxBackground";
 import { Rocket } from "../components/Rocket";
+import { Earth } from "../components/Earth";
+import { Fireworks } from "../components/Fireworks";
 import { Float, OrbitControls } from "@react-three/drei";
 import { useMediaQuery } from "react-responsive";
 import { easing } from "maath";
@@ -185,10 +187,18 @@ const Home = () => {
   }, [targetProgress]);
 
   const rocketScale = isMobile ? 0.002 : 0.005;
+  const earthScale = 0.01 + (Math.min(progressPct, 100) / 100) * 0.125; // 0.01 -> 0.135 (50% bigger final size)
+  const earthPosition = isMobile ? [0.9, 1.55, -2.15] : [4.35, 2.7, -3.0];
+  const orbitRadius = isMobile ? 0.28 : 0.5;
+  const rocketDockPosition = [
+    earthPosition[0],
+    earthPosition[1] + orbitRadius * 0,
+    earthPosition[2],
+  ];
 
-  // Define point A and point B (tune these!)
-  const from = isMobile ? [0, -1.0, 0] : [-2.5, -1.5, 0.5]; // starting point
-  const to = isMobile ? [0.8, 1.6, -2.2] : [4.2, 2.8, -3.0]; // ending point (top-right)
+  // Rocket approaches Earth first, then Rocket.jsx switches to orbit.
+  const from = isMobile ? [0, -1.0, 0] : [-2.5, -1.5, 0.5];
+  const to = [earthPosition[0] + orbitRadius + 1, earthPosition[1], earthPosition[2]];
 
   return (
     <section
@@ -252,29 +262,45 @@ const Home = () => {
         )}
         {stepDescriptions[stepIndex]}
       </div>
-      {!isMobile && progressPct >= 100 && (
-        <img
-          src="/earth.png"
-          alt="Earth Image"
-          className="absolute right-16 top-20 z-30 h-[9.375rem] w-auto drop-shadow-[0_10px_30px_rgba(255,255,255,0.60)] md:right-56 md:top-26 md:h-[9.25rem]"
-        />
-      )}
       <figure
         className="absolute inset-0"
         style={{ width: "100vw", height: "100vh" }}
       >
         <Canvas>
            <Suspense fallback={<Loader />}>
-            <ambientLight intensity={0.6} />
-            <directionalLight position={[3, 4, 2]} intensity={1.2} />
-            <Rocket
-              scale={rocketScale} // scale the rocket appropriately
-              scrollProgress={smoothProgress} // pass scroll progress
-              from={from} // starting position
-              to={to} // ending position
-              rotFrom={-0.2} // face right on load
-              rotTo={Math.PI / 2} // keep facing right
-            />
+              <ambientLight intensity={0.6} />
+              <directionalLight position={[3, 4, 2]} intensity={1.2} />
+              <Float speed={1.4} rotationIntensity={0.2} floatIntensity={0.1}>
+                <Earth position={earthPosition} scale={earthScale} />
+              </Float>
+              {progressPct >= 99 && (
+                <group>
+                  <pointLight
+                    position={[0, 0.6, 0.4]}
+                    intensity={1.4}
+                    color="#ffbb66"
+                    distance={6}
+                  />
+                  <Fireworks
+                    position={[0, 0, 0]}
+                    scale={isMobile ? 0.45 : 0.06}
+                  />
+                </group>
+              )}
+              <Rocket
+                scale={rocketScale} // scale the rocket appropriately
+                scrollProgress={smoothProgress} // pass scroll progress
+                from={from} // starting position
+                to={to} // approach point before orbit
+                orbitCenter={earthPosition}
+                orbitRadius={orbitRadius}
+                orbitStartAt={0.72}
+                orbitTurns={1.8}
+                dockPosition={rocketDockPosition}
+                dockAt={0.995}
+                rotFrom={-0.2} // face right on load
+                rotTo={Math.PI / 2} // keep facing right
+              />
             {/* <OrbitControls enableZoom={false} /> */}
           </Suspense>
         </Canvas>
